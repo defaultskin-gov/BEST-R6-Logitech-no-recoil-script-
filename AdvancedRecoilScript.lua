@@ -244,9 +244,9 @@ local operator_descriptions = {
     ["Fenrir"]     = {gun = "MP7",           attachments = "NO GRIP - 1x - COMPENSATOR"},
 }
  
---------------------------------------------------------------------------------
--- SHOULD NOT CHANGE ANYTHING UNDER THIS LINE --
---------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- IF YOU DONT UNDERSTAND HOW THE AUTO OPERATOR DETECT WORKS THEN CHANGE YOUR OPS MANUALLY AT ''local v1='' --
+--------------------------------------------------------------------------------------------------------------
 local attackers_operators = {
     "Ace", "Amaru", "Ash", "Blackbeard", "Buck", "Capitao", "Dokkaebi", "Finka",
     "Flores", "Zofia", "Fuze", "Glaz", "Gridlock", "Grim", "Hibana", "Iana",
