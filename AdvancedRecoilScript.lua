@@ -10,7 +10,7 @@ local toggleKey = "scrolllock"
 local mouse = "g502" -- superlight or g502
  
  
---[[
+--[[ make sure you copy the entire script as the bottom part is slightly hidden
  
    Instructions: https://github.com/defaultskin-gov
  
