@@ -7,8 +7,8 @@ A customizable Logitech script designed to reduce recoil patterns for supported 
 ⚠️ Disclaimer
 This is a beta release and may be unstable
 Use at your own risk
-May not work perfectly across all setups (DPI, sensitivity, in-game settings)
-Could violate terms of service in some games
+May not work perfectly across all setups (DPI, sensitivity, in-game settings) so read the script and the exact settings will be there
+Undetected in r6 as of (April 2026)
 ✨ Features
 Adjustable recoil control
 Weapon/profile switching
