@@ -1,0 +1,15 @@
+This script is made for very specific settings and are mostly focused on ash and bandit.
+The best settings to match this script is
+800dpi
+6 vertical and 6 horizontal
+86 fov
+1x zoom=41 and 2.5x zoom= 83. (the 2.5x zoom multiplier is really important for ash's r4c as the pattern is built around it)
+
+
+The r4c build is suppressor, magnified B and vertical grip.
+Best pattern atm for ash-> {-1, 31, 60, -1, 20, 150, -1, 20, 480, -1, 22, 1300} 
+
+The mp7 build is extended barrel, holo A 1x and vertical
+Best pattern atm for bandit-> {0, 20, 76, 0, 15, 800, 0, 16, 300, 0, 17, 800}
+
+DISCLAIMER: If you dont match the exact settings above then the recoil wont be as good
