@@ -1,0 +1,251 @@
+EnablePrimaryMouseButtonEvents(true)
+ 
+-- Set this to true for attackers, false for defenders
+local attackers = false
+
+-- Options: "capslock", "scrolllock", "numlock"
+-- While the chosen key is not active, the script will be functioning
+local toggleKey = "capslock"
+ 
+local mouse = "superlight" -- superlight or g502
+ 
+ 
+--[[
+ 
+   Instructions: https://discord.gg/crypticsupply
+ 
+   //////////////////////////////////////////////////////////////////////////////////////
+   //                                                                                  //
+   //                              「  DEVELOPER: CRYPTIC  」                           //
+   //                                                                                  //
+   //                                                                                  //
+   //////////////////////////////////////////////////////////////////////////////////////
+ 
+ 
+ 
+                                               ▒█▒▒▓▓                                               
+                                           ░▓█▓░▓▓    █▓░                                           
+                                       ░█████▒███▒░░   ░████░                                       
+                                   ▒████████████▓█▓░░   ░███████▒                                   
+                               ▒███████████▓▓███░▓▓░▒░▒  ███████████▒                               
+                           ▒███████░▓███████▓  ▒████▓░ ░▓████████░██████▒                           
+                          █████▓  ▓████████████▓▒▒   ▒██▓▓████████▓  ▒████                          
+                          ██████░ ░██████████████▒   ░▓███████████▓  █████                          
+                     ░    █████▒ █████████████▓██▒   ░▓██████▓ ▒███▓ ░████    ░                     
+                          ████▓▓██▓ ▓████▓██████▒░  ▓███▓░ ▓▒  █ ░███▓▓███   ▒ ▒                    
+                          ████████▓█░▒█████▒▓█████████▓  ▓▒  ▓░   ▓███████     ░                    
+                    ░     ▒██████  ░░ ▒░█████▓▓█████▒ ░▓   ▓▓░ ░   ██████▒ ░▒  ░                    
+                           ██████░░▒▒░ ▓░▓█▓▒▒▓▓▒▒░ ░▒   ▓▓░░ ░▒▓▓ ▒█████                           
+                           ▒████▓░░░░▒▓██████▓▒░░░    ▒█▒░   ▓▓░ ░  ████▒   ▒                       
+                            ████░░░▒▒▒ ▒████████▓░  ▓████████▓░     ▓███   ░░                       
+                            ▒███░  ▓█▓▒▓█████████████▓▒▒▓███▒░  ░   ▓██▒                            
+                         ▒░▒▓██▓ ██▓▒▒▒ ░█░                   ▒░    ▓██▓▓░▓                         
+                         ▒▓▒▒▒▒░▒▓░░▒▓▓██████████████████████▓▒▓▓░▒▒▒▒▒▒░ ▓                         
+                         ▒▓▒▒▒▒░▒▓▒▒░░░ ▒░░███░░█▒▒▒▒▒▒░░▓▒░░░ ▒▒░▒▒▒▒▒▒▒░▒                         
+                         ▓▒░██▒▒░█░░▓▓▒░▒░ ███░░█▒░░▒▒▒░▒▒▒▒░▒▓▓▓░▒▓░▒██▒░▒                         
+                         █░░███▓▓░▒░▒▒▒░▒▒░▒▒▒▒░▒▒░▒▒▒▒░▓██░░▓██▓░▒▓░░███▓█                         
+                      ░  █░░▓████░▓▒▒▒▒░█▒▒▒▒▒▒░░▒▒▒▒▒▒▒███░░▓██▓░▒▓▒░▓████  ▓▒                     
+                         █▓▒░▒████░░▒▒▒▓███▓▓▒▒░█▒░▓███████░░▓██▓░▒█▒▒░████    ▒                    
+                         ██▒▓▒▒▒▒█░░▓▓▓▒░██▒▓▒░██▒▒▓██████▒▓▒███░░▒██▒▓▒▒░▒                         
+                         ███▓▒▓▒▒█░░██▓▒▓█████████████████▓▒████░▒████▒▓▓▒░     ░                   
+                   ░     ████▓░          ░██░ ▓██████▓  ▓█░          ░▓▓▒░░     ▒                   
+                              ░            ░██▒ ░▓▒   ██░            ▓                              
+                                              ▓█▓  ▒█▓                     ░                        
+                                                ▒██▒                                                
+ 
+ 
+ 
+ 
+   SETTINGS:
+ 
+   - VERTICAL / HORIZONTAL = 6
+   - 1X = 41
+   - 2.5X = 70                                                                         	
+   - FOV = 90                                                                              	
+ 
+   -------------------------------------------------------------------------------------
+   discord.gg/crypticsupply
+]]--
+ 
+local button_map_attackers = {
+    ["IQ"] = 10, -- g502: 10 | superlight: 1
+    ["Deimos"] = 11, -- g502: 11 | superlight: 2
+}
+ 
+local button_map_defenders = {
+    ["Upcoming OP"] = 10, -- g502: 10 | superlight: 1
+    ["Jager"] = 11, -- g502: 11 | superlight: 2
+}
+ 
+-- Adjust vertical recoil strength (1.0 = default, 0.5 = half, 2.0 = double) (wouldn't recommend changing this without the help of staff)
+local y_recoil_factor = 1.0
+ 
+ 
+local attackers_recoil_patterns = {
+    ["Ace"]        = {-1, 16, 150, -1, 17, 500, -1, 18, 500, -1, 18, 800, 1, 19, 200},
+    ["Amaru"]      = {0, 21, 115, -1, 18, 500, -1, 20, 700, -1, 19, 730, -1, 21, 1400},
+    ["Ash"]        = {-1, 31, 60, -1, 20, 150, -1, 20, 480, -1, 22, 1300},
+    ["Ash 1x"]     = {-0.54, 16.76, 60, -0.54, 10.81, 150, -0.54, 10.81, 480, -0.54, 11.89, 1300},
+    ["Blackbeard"] = {0, 7, 150, 0, 7, 250, 1, 6, 650, 2, 7, 1500},
+    ["Buck"]       = {0, 19, 150, 0, 18, 650, -1, 18, 1050, -1, 25, 500},
+    ["Capitao"]    = {0, 13, 150, 0, 14, 400, -1, 14, 1000, -1, 16, 3300, -1, 17, 4000},
+    ["Dokkaebi"]   = {3, 27, 143, 5, 24, 345, 0, 24, 491, 5, 26, 491},
+    ["Dokkaebi 2.0"]   = {2.4, 21.6, 143, 4, 19.2, 345, 0, 19.2, 491, 4, 20.8, 491},
+    ["Finka"]      = {0, 14, 40, -1, 16, 650, -1, 16, 650, 1, 16, 10, -1, 18, 7000},
+    ["Flores"]     = {0, 12, 80, -1, 14, 350, 0, 14, 300, -1, 14, 200, 0, 14, 1400},
+    ["Zofia"]      = {0, 28, 90, 0, 21, 600, 2, 21, 500, 1, 25, 1500},
+    ["Fuze"]       = {-1, 16, 150, -1, 17, 500, -1, 18, 500, -1, 18, 800, 1, 19, 200},
+    ["Glaz"]       = {0, 22, 60, 0, 21, 1600},
+    ["Gridlock"]   = {0, 15, 150, -1, 15, 400, -1, 16, 1000, -1, 17, 1000},
+    ["Grim"]       = {0, 12, 112, -1, 13, 500, -1, 13, 500, -1, 15, 850, -1, 16, 800},
+    ["Hibana"]     = {0, 16, 40, -1, 17, 600, -1, 17, 300, -2, 18, 550},
+    ["Iana"]       = {0, 16, 60, 2, 16, 1100, 4, 17, 550, 2, 17, 800},
+    ["IQ"]         = {0, 21, 115, -1, 18, 500, -1, 20, 700, -1, 19, 730, -1, 21, 1400},
+    ["Jackal"]     = {1, 20, 80, 0, 17, 600, -2, 19, 300, 0, 20, 1000, -1, 21, 1700},
+    ["Kali"]       = {0, 19, 70, 1, 13, 200, -2, 13, 300, 4, 13, 1100},
+    ["Lion"]       = {0, 14, 60, 0, 16, 300, 0, 16, 1700, 0, 18, 2300},
+    ["Maverick"]   = {0, 30, 40, -1, 17, 200, -1, 19, 800, -1, 22, 1360},
+    ["Nokk"]       = {0, 27, 40, 1, 20, 200, 1, 21, 800, 2, 24, 1400},
+    ["Nomad"]      = {0, 26, 70, -1, 13, 1400, -1, 15, 1700, -1, 16, 750},
+    ["Osa"]        = {1, 20, 80, 0, 17, 600, -2, 19, 300, 0, 20, 1000, -1, 21, 1700},
+    ["Sens"]       = {1, 34, 40, 1, 14, 400, 0, 15, 1600, -1, 15, 300, -2, 17, 1800},
+    ["Rauora"]     = {-2, 23, 70, -2, 17, 600, -2, 19, 1000, -2, 18, 1000},
+    ["Sledge"]     = {0, 21, 60, 2, 10, 450, 2, 11, 300, 3, 13, 1000, 3, 13, 1000},
+    ["Thatcher"]   = {-1, 17, 80, -1, 13, 200, 0, 13, 500, -2, 14, 300, -1, 14, 1800},
+    ["Thermite"]   = {0, 16, 80, 2, 11, 350, 2, 10, 300, 2, 11, 200, 3, 12, 1600},
+    ["Twitch"]     = {0, 60, 30, 3, 27, 100, -2, 29, 300, -1, 30, 300, -1, 33, 1000},
+    ["Ying"]       = {0, 12, 60, 1, 13, 300, -1, 14, 600, 0, 15, 1650, 4, 16, 4000, 5, 17, 2000},
+    ["Zero"]       = {0, 18, 40, -1, 17, 200, 1, 20, 700, 0, 20, 350, 1, 20, 650},
+    ["Deimos"]     = {0, 26, 70, -1, 13, 1400, -1, 15, 1700, -1, 16, 750},
+    ["Brava"]      = {0, 13, 90, -1, 13, 550, 0, 13, 500, -1, 14, 900, -1, 16, 900},
+}
+ 
+local defenders_recoil_patterns = {
+    ["Alibi"]       = {0, 28, 60, 1, 19, 600, 3, 20, 200, 4, 21, 300, 5, 21, 550, 1, 21, 350},
+    ["Aruni"]       = {0, 30, 10, 1, 17, 1000},
+    ["Azami"]       = {0, 11.89, 5, -0.54, 8.11, 310, -0.54, 9.73, 310, -0.54, 9.19, 800, 0, 9.73, 410, -0.54, 10.27, 510},
+    ["Bandit"]      = {0, 20, 76, 0, 15, 800, 0, 16, 300, 0, 17, 800},
+    ["Castle"]      = {0, 25, 30, -2, 11, 250, 0, 11, 200, 0, 11, 400, -2, 11, 700, 0, 12, 1100},
+    ["Caveira"]     = {0, 12, 70, 0, 8, 650, -1, 8, 900, 0, 9, 600, -1, 8, 1000},
+    ["Clash"]       = {0, 19, 70, 1, 13, 200, -2, 13, 300, 4, 13, 1100},
+    ["Doc"]         = {0, 30, 38, -1, 17, 600, 0, 20, 300, -1, 21, 500, -1, 21, 900},
+    ["Echo"]        = {0, 34, 30, -1, 21, 600, 0, 23, 300, -1, 24, 1400},
+    ["Ela"]         = {1, 30, 100, 4, 18, 500, 6, 27, 300, 4, 27, 900, 8, 26, 600},
+    ["Frost"]       = {0, 18, 30, 0, 12, 600, 1, 11, 1100, 0, 12, 500, 0, 11, 1300},
+    ["Goyo"]        = {0, 36, 59, 3, 29, 250, -1, 34, 150, -3, 34, 300, 3, 34, 600},
+    ["Jager"]       = {0, 31, 62, -1, 18, 300, -1, 19, 1000, -1, 20, 700, -3, 20, 200},
+    ["Kaid"]        = {0, 26, 60, 1, 13, 300, 1, 13, 800, 0, 15, 1650},
+    ["Kapkan"]      = {0, 22, 5, -1, 15, 310, -1, 18, 310, -1, 17, 800, 0, 18, 410, -1, 19, 510},
+    ["Lesion"]      = {0, 22, 50, 0, 18, 500, -1, 20, 300, 0, 20, 300, -1, 20, 100, 1, 21, 900},
+    ["Maestro"]     = {0, 35, 20, 0, 16, 500, 0, 17, 500, 0, 18, 500, -1, 18, 600, 0, 19, 600, 0, 20, 2600},
+    ["Melusi"]      = {0, 28, 40, 0, 16, 600, -1, 17, 1000, 1, 19, 700},
+    ["Mira"]        = {0, 27, 60, 1, 21, 250, 2, 24, 100, -2, 24, 300, 0, 23, 700},
+    ["Mozzie"]      = {0, 30, 10, 2, 17, 1000},
+    ["Mute"]        = {0, 16.752, 150, -0.670, 14.744, 400, -0.670, 14.744, 700, -0.670, 17.422, 300, -0.670, 16.083, 150},
+    ["Oryx"]        = {0, 22, 50, 0, 18, 500, -1, 20, 300, 0, 20, 300, -1, 20, 100, 1, 21, 900},
+    ["Pulse"]       = {0, 22, 30, -1, 8, 250, 2, 8, 200, 0, 8, 400, -2, 7, 700, 0, 8, 1100},
+    ["Rook"]        = {0, 30, 38, 0, 20, 600, 0, 23, 300, 0, 24, 500, 0, 24, 2000},
+    ["Smoke"]       = {0, 25, 150, -1, 22, 400, -1, 22, 700, -1, 26, 300, -1, 24, 150},
+    ["Tachanka"]    = {0, 33, 5, -1, 23, 310, -1, 26, 310, -1, 25, 800, 0, 26, 410, -4, 27, 510},
+    ["Thorn"]       = {0, 26, 50, 0, 15, 500, 1, 16, 500, 1, 18, 500, 0, 19, 300},
+    ["Thunderbird"] = {0, 32, 30, -1, 18, 250, 0, 18, 250, -1, 20, 500, -1, 21, 500, -1, 20, 500, 0, 21, 700},
+    ["Valkyrie"]    = {0, 29, 20, 0, 14, 500, -1, 16, 500, -1, 16, 500, 1, 17, 500, 1, 18, 300},
+    ["Vigil"]       = {0, 27, 30, -1, 15, 300, -1, 17, 500, -1, 18, 700, -1, 17, 500, -1, 19, 500},
+    ["Wamai"]       = {0, 20, 40, 1, 13, 300, -1, 13, 400, 0, 13, 1400, -1, 14, 500, -1, 15, 200},
+    ["Warden"]      = {2.4, 21.6, 114.4, 4, 19.2, 276, 0, 19.2, 392.8, 4, 20.8, 392.8},
+    ["Upcoming OP"] = {-1,16,50},
+}
+ 
+ 
+local operator_descriptions = {
+    ["Ace"]        = {gun = "AK12",          attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Amaru"]      = {gun = "G8A1",          attachments = "VERT GRIP - 1x - SUPRESSROR"},
+    ["Ash"]        = {gun = "R4C",           attachments = "VERT GRIP - 1x - SUPRESSOR"},
+    ["Blackbeard"] = {gun = "MK17 CQB",      attachments = "HORZ GRIP - IRONSIGHT (1.0x) - FLASHHIDER"},
+    ["Buck"]       = {gun = "C8-SFW",        attachments = "NO GRIP - 2.5x - FLASHHIDER"},
+    ["Capitao"]    = {gun = "M249",          attachments = "ANGLED GRIP - 2.5x - FLASHHIDER"},
+    ["Dokkaebi"]   = {gun = "SMG-12",        attachments = "VERT GRIP - 1x - NO BARREL"},
+    ["Finka"]      = {gun = "6P41",          attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Flores"]     = {gun = "AR-33",         attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Zofia"]      = {gun = "M762",          attachments = "HORZ GRIP - 2.5x - FLASHHIDER"},
+    ["Fuze"]       = {gun = "AK-12",         attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Glaz"]       = {gun = "BEARING-9",     attachments = "NO GRIP - 1x - FLASHHIDER"},
+    ["Gridlock"]   = {gun = "F90",           attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Grim"]       = {gun = "552-COMMANDO",  attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Hibana"]     = {gun = "TYPE-89",       attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Iana"]       = {gun = "G36C",          attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["IQ"]         = {gun = "G8A1",          attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Jackal"]     = {gun = "PDW9",          attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Kali"]       = {gun = "SPSMG9",        attachments = "NO GRIP - 1x - COMPENSATOR"},
+    ["Lion"]       = {gun = "V308",          attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Maverick"]   = {gun = "M4",            attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Nokk"]       = {gun = "FMG-9",         attachments = "NO GRIP - 2.5x - SUPPRESSOR"},
+    ["Nomad"]      = {gun = "AK-74M",        attachments = "NO GRIP - 2.5x - FLASHHIDER"},
+    ["Osa"]        = {gun = "PDW9",          attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Zero"]       = {gun = "MP7",           attachments = "NO GRIP - 2.5x - FLASHHIDER"},
+    ["Rauora"]     = {gun = "REAPER MK2",    attachments = "NO GRIP - 1x - FLASHHIDER"},
+    ["Sens"]       = {gun = "POF-9",         attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Sledge"]     = {gun = "L85A2",         attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Thatcher"]   = {gun = "AR33",          attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Thermite"]   = {gun = "557XL",         attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Twitch"]     = {gun = "F2",            attachments = "NO GRIP - 2.5x - FLASHHIDER"},
+    ["Ying"]       = {gun = "T95-LSW",       attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+    ["Deimos"]     = {gun = "AK-74M",        attachments = "HORZ GRIP - 2.5x - FLASHHIDER"},
+    ["Brava"]      = {gun = "PARA-308",      attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
+ 
+ 
+    ["Smoke"]      = {gun = "SMG-11",        attachments = "VERT GRIP - 1x - COMPENSATOR"},
+    ["Mute"]       = {gun = "SMG-11",        attachments = "VERT GRIP - 1x - FLASHHIDER"},
+    ["Castle"]     = {gun = "UMP45",         attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Pulse"]      = {gun = "UMP45",         attachments = "VERT GRIP - 1x - COMPENSATOR"},
+    ["Doc"]        = {gun = "MP5",           attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Rook"]       = {gun = "P90",           attachments = "NO GRIP   - 2.5x - COMPENSATOR"},
+    ["Kapkan"]     = {gun = "9x19VSN",       attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Tachanka"]   = {gun = "9x19VSN",       attachments = "HORZ GRIP - 2.5x - EXTENDED BARREL"},
+    ["Jager"]      = {gun = "416-C-CARBINE", attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Bandit"]     = {gun = "MP7",           attachments = "NO GRIP - 1x - EXTENDED BARREL"},
+    ["Frost"]      = {gun = "9MM-C1",        attachments = "VERT GRIP - 2.5x - COMPENSATOR"},
+    ["Valkyrie"]   = {gun = "MPX",           attachments = "HORZ GRIP - 1x - COMPENSATOR"},
+    ["Caveira"]    = {gun = "M12",           attachments = "NO GRIP - 1x - COMPENSATOR"},
+    ["Echo"]       = {gun = "MP5SD",         attachments = "HORZ GRIP - 2.5x - NO BARREL"},
+    ["Mira"]       = {gun = "VECTOR.45",     attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Lesion"]     = {gun = "T-5",           attachments = "HORZ GRIP - 1x - COMPENSATOR"},
+    ["Ela"]        = {gun = "SCORPION-EVO",  attachments = "HORZ GRIP - 1x - SUPRESSOR"},
+    ["Vigil"]      = {gun = "K1A",           attachments = "HORZ GRIP - 1x - SUPRESSOR"},
+    ["Maestro"]    = {gun = "ALDA.5.56",     attachments = "VERT GRIP - 1x - FLASHHIDER"},
+    ["Alibi"]      = {gun = "MX4-STORM",     attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Clash"]      = {gun = "SPSMG9",        attachments = "NO GRIP - 1x - COMPENSATOR"},
+    ["Kaid"]       = {gun = "AUG-A3",        attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Mozzie"]     = {gun = "P10-RONI",      attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Warden"]     = {gun = "SMG-12",        attachments = "VERT GRIP - 1x - NO BARREL"},
+    ["Goyo"]       = {gun = "VECTOR.45",     attachments = "HORZ GRIP - 2.5x - COMPENSATOR"},
+    ["Wamai"]      = {gun = "MP5K",          attachments = "NO GRIP - 1x - COMPENSATOR"},
+    ["Oryx"]       = {gun = "T-5",           attachments = "HORZ GRIP - 1x - COMPENSATOR"},
+    ["Melusi"]     = {gun = "MP5",           attachments = "HORZ GRIP - 1x - COMPENSATOR"},
+    ["Aruni"]      = {gun = "P10-RONI",      attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Thunderbird"]= {gun = "SPEAR.308",     attachments = "VERT GRIP - 1x - COMPENSATOR"},
+    ["Thorn"]      = {gun = "UZK50GI",       attachments = "HORZ GRIP - 1x - COMPENSATOR"},
+    ["Azami"]      = {gun = "9x19VSN",       attachments = "HORZ GRIP - 1x - EXTENDED BARREL"},
+    ["Upcoming OP"]= {gun = "DMR",           attachments = "HORZ GRIP - 2.5x - COMPENSATOR"},
+    ["Fenrir"]     = {gun = "MP7",           attachments = "NO GRIP - 1x - COMPENSATOR"},
+}
+ 
+--------------------------------------------------------------------------------
+-- SHOULD NOT CHANGE ANYTHING UNDER THIS LINE --
+--------------------------------------------------------------------------------
+local attackers_operators = {
+    "Ace", "Amaru", "Ash", "Blackbeard", "Buck", "Capitao", "Dokkaebi", "Finka",
+    "Flores", "Zofia", "Fuze", "Glaz", "Gridlock", "Grim", "Hibana", "Iana",
+    "IQ", "Jackal", "Kali", "Lion", "Maverick", "Nokk", "Nomad", "Osa", "Rauora",
+    "Sens", "Sledge", "Thatcher", "Thermite", "Twitch", "Ying", "Zero", "Deimos", "Brava"
+}
+local defenders_operators = {
+    "Alibi", "Aruni", "Azami", "Bandit", "Castle", "Caveira", "Clash", "Doc", "Echo", "Ela",
+    "Frost", "Goyo", "Jager", "Kaid", "Kapkan", "Lesion", "Maestro", "Melusi", "Mira", "Mozzie",
+    "Mute", "Oryx", "Pulse", "Rook", "Smoke", "Tachanka", "Thorn", "Thunderbird", "Valkyrie",
+    "Vigil", "Wamai", "Warden", "Upcoming OP",
+}
+ 
+ 
+local function v0(v4) local v5=v4-(v4%1) ;if ((v4%1)>=0.5) then return v5 + (1 -0) ;else return v5;end end ClearLog();OutputLogMessage("Loading...");local v1=(attackers and "Dokkaebi 2.0") or "Mute" ;local v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;asciiArtLines={" ▄████████    ▄████████ ▄██   ▄      ▄███████▄     ███      ▄█   ▄████████ ","███    ███   ███    ███ ███   ██▄   ███    ███ ▀█████████▄ ███  ███    ███ ","███    █▀    ███    ███ ███▄▄▄███   ███    ███    ▀███▀▀██ ███▌ ███    █▀  ","███         ▄███▄▄▄▄██▀ ▀▀▀▀▀▀███   ███    ███     ███   ▀ ███▌ ███        ","███        ▀▀███▀▀▀▀▀   ▄██   ███ ▀█████████▀      ███     ███▌ ███        ","███    █▄  ▀███████████ ███   ███   ███            ███     ███  ███    █▄  ","███    ███   ███    ███ ███   ███   ███            ███     ███  ███    ███ ","████████▀    ███    ███  ▀█████▀   ▄████▀         ▄████▀   █▀   ████████▀  ","             ███    ███                "};local function v3() local v6={};local v7=(attackers and attackers_operators) or defenders_operators ;for v12=1, #v7,4 do local v13=v7[v12] or "" ;local v14=v7[v12 + (2 -1) ] or "" ;local v15=v7[v12 + (3 -1) ] or "" ;local v16=v7[v12 + (4 -1) ] or "" ;local v17=((v1==v13) and ">✅<") or "[❌]" ;local v18=((v1==v14) and ">✅<") or "[❌]" ;local v19=((v1==v15) and ">✅<") or "[❌]" ;local v20=((v1==v16) and ">✅<") or "[❌]" ;v6[ #v6 + (351 -(87 + 263)) ]=string.format("  %s - %-12s   %s - %-12s   %s - %-12s   %s - %-12s",v17,v13,v18,v14,v19,v15,v20,v16);end return v6;end function DisplayMenu() ClearLog();OutputLogMessage("Selected Mode: %s\n",(attackers and "⚔️Attackers⚔️ \n") or "🏰Defenders🏰 \n" );if operator_descriptions[v1] then local v25=0;while true do if ((181 -(67 + 113))==v25) then OutputLogMessage("Attachments: %s\n",operator_descriptions[v1].attachments);break;end if (v25==(0 + 0)) then OutputLogMessage("Operator: %s\n",v1);OutputLogMessage("Gun: %s\n",operator_descriptions[v1].gun);v25=2 -1 ;end end end OutputLogMessage("\n");local v8=v3();local v9=math.max( #v8, #asciiArtLines);for v22=1 + 0 ,v9 do local v23=v8[v22] or "" ;local v24=asciiArtLines[v22] or "" ;OutputLogMessage(string.format("%-80s%s\n",v23,v24));end end function OnEvent(v10,v11) if (v10=="MOUSE_BUTTON_PRESSED") then if ((v11==(11 -8)) and IsModifierPressed("lctrl")) then local v28=(attackers and attackers_operators) or defenders_operators ;local v29=953 -(802 + 150) ;for v31,v32 in ipairs(v28) do if (v32==v1) then v29=v31 + (2 -1) ;if (v29> #v28) then v29=1;end break;end end v1=v28[v29];v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;DisplayMenu();return;end local v26=false;if v26 then OutputLogMessage(string.format("%s \n",v11));end local v27=(attackers and button_map_attackers) or button_map_defenders ;if (mouse=="superlight") then if IsModifierPressed("lctrl") then for v33,v34 in pairs(v27) do if (v11==v34) then local v42=0 -0 ;while true do if (v42==(1 + 0)) then DisplayMenu();return;end if (v42==(997 -(915 + 82))) then v1=v33;v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;v42=2 -1 ;end end end end end elseif (mouse=="g502") then for v35,v36 in pairs(v27) do if (v11==v36) then local v43=0 + 0 ;while true do if (v43==(1 -0)) then DisplayMenu();return;end if (v43==0) then v1=v35;v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;v43=1188 -(1069 + 118) ;end end end end end if ((v11==(2 -1)) and  not IsKeyLockOn(toggleKey)) then if IsMouseButtonPressed(3) then for v37=1 -0 , #v2,3 do local v38=GetRunningTime();local v39=v2[v37];local v40=v0(v2[v37 + 1 + 0 ] * y_recoil_factor );local v41=v2[v37 + (3 -1) ];repeat Sleep(10 + 0 );MoveMouseRelative(v39,v40);until ((GetRunningTime() -v38)>=v41) or  not IsMouseButtonPressed(792 -(368 + 423) ) or  not IsMouseButtonPressed(9 -6 )  if ( not IsMouseButtonPressed(19 -(10 + 8) ) or  not IsMouseButtonPressed(3)) then break;end end end end end end DisplayMenu();
+ 
