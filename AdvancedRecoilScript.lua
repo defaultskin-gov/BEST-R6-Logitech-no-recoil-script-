@@ -5,7 +5,7 @@ local attackers = false
  
 -- Options: "capslock", "scrolllock", "numlock"
 -- While the chosen key is not active, the script will be functioning
-local toggleKey = "scrolllock"
+local toggleKey = "capslock"
  
 local mouse = "g502" -- superlight or g502
  
@@ -75,9 +75,9 @@ local mouse = "g502" -- superlight or g502
    SETTINGS:
  
    - VERTICAL / HORIZONTAL = 6
-   - 1X = 41
-   - 2.5X = 70                                                                         	
-   - FOV = 90                                                                              	
+   - 1X = 50
+   - 2.5X = 70  (ASH=83)                                                                        	
+   - FOV = 86                                                                              	
  
    -------------------------------------------------------------------------------------
    
@@ -101,10 +101,11 @@ local attackers_recoil_patterns = {
     ["Ace"]        = {-1, 16, 150, -1, 17, 500, -1, 18, 500, -1, 18, 800, 1, 19, 200},
     ["Amaru"]      = {0, 21, 115, -1, 18, 500, -1, 20, 700, -1, 19, 730, -1, 21, 1400},
     ["Ash"]        = {-1, 31, 60, -1, 20, 150, -1, 20, 480, -1, 22, 1300},
+    ["Ash 1x"]     = {-0.54, 16.76, 60, -0.54, 10.81, 150, -0.54, 10.81, 480, -0.54, 11.89, 1300},
     ["Blackbeard"] = {0, 7, 150, 0, 7, 250, 1, 6, 650, 2, 7, 1500},
     ["Buck"]       = {0, 19, 150, 0, 18, 650, -1, 18, 1050, -1, 25, 500},
     ["Capitao"]    = {0, 13, 150, 0, 14, 400, -1, 14, 1000, -1, 16, 3300, -1, 17, 4000},
-    ["Dokkaebi"]   = {3, 27, 143, 5, 24, 345, 0, 24, 491, 5, 26, 491},
+    ["Dokkaebi"]   = {2.4, 21.6, 143, 4, 19.2, 345, 0, 19.2, 491, 4, 20.8, 491},
     ["Finka"]      = {0, 14, 40, -1, 16, 650, -1, 16, 650, 1, 16, 10, -1, 18, 7000},
     ["Flores"]     = {0, 12, 80, -1, 14, 350, 0, 14, 300, -1, 14, 200, 0, 14, 1400},
     ["Zofia"]      = {0, 28, 90, 0, 21, 600, 2, 21, 500, 1, 25, 1500},
@@ -137,8 +138,8 @@ local attackers_recoil_patterns = {
 local defenders_recoil_patterns = {
     ["Alibi"]       = {0, 28, 60, 1, 19, 600, 3, 20, 200, 4, 21, 300, 5, 21, 550, 1, 21, 350},
     ["Aruni"]       = {0, 30, 10, 1, 17, 1000},
-    ["Azami"]       = {0, 22, 5, -1, 15, 310, -1, 18, 310, -1, 17, 800, 0, 18, 410, -1, 19, 510},
-    ["Bandit"]      = {0, 20, 76, 1, 15, 800, 0, 16, 300, -1, 17, 800},
+    ["Azami"]       = {0, 11.89, 5, -0.54, 8.11, 310, -0.54, 9.73, 310, -0.54, 9.19, 800, 0, 9.73, 410, -0.54, 10.27, 510},
+    ["Bandit"]      = {0, 20, 76, 0, 15, 800, 0, 16, 300, 0, 17, 800},
     ["Castle"]      = {0, 25, 30, -2, 11, 250, 0, 11, 200, 0, 11, 400, -2, 11, 700, 0, 12, 1100},
     ["Caveira"]     = {0, 12, 70, 0, 8, 650, -1, 8, 900, 0, 9, 600, -1, 8, 1000},
     ["Clash"]       = {0, 19, 70, 1, 13, 200, -2, 13, 300, 4, 13, 1100},
@@ -155,7 +156,7 @@ local defenders_recoil_patterns = {
     ["Melusi"]      = {0, 28, 40, 0, 16, 600, -1, 17, 1000, 1, 19, 700},
     ["Mira"]        = {0, 27, 60, 1, 21, 250, 2, 24, 100, -2, 24, 300, 0, 23, 700},
     ["Mozzie"]      = {0, 30, 10, 2, 17, 1000},
-    ["Mute"]        = {0, 25, 150, -1, 22, 400, -1, 22, 700, -1, 26, 300, -1, 24, 150},
+    ["Mute"]        = {0, 16.752, 150, -0.670, 14.744, 400, -0.670, 14.744, 700, -0.670, 17.422, 300, -0.670, 16.083, 150},
     ["Oryx"]        = {0, 22, 50, 0, 18, 500, -1, 20, 300, 0, 20, 300, -1, 20, 100, 1, 21, 900},
     ["Pulse"]       = {0, 22, 30, -1, 8, 250, 2, 8, 200, 0, 8, 400, -2, 7, 700, 0, 8, 1100},
     ["Rook"]        = {0, 30, 38, 0, 20, 600, 0, 23, 300, 0, 24, 500, 0, 24, 2000},
@@ -166,7 +167,7 @@ local defenders_recoil_patterns = {
     ["Valkyrie"]    = {0, 29, 20, 0, 14, 500, -1, 16, 500, -1, 16, 500, 1, 17, 500, 1, 18, 300},
     ["Vigil"]       = {0, 27, 30, -1, 15, 300, -1, 17, 500, -1, 18, 700, -1, 17, 500, -1, 19, 500},
     ["Wamai"]       = {0, 20, 40, 1, 13, 300, -1, 13, 400, 0, 13, 1400, -1, 14, 500, -1, 15, 200},
-    ["Warden"]      = {3, 27, 143, 5, 24, 345, 0, 24, 491, 5, 26, 491},
+    ["Warden"]      = {2.4, 21.6, 114.4, 4, 19.2, 276, 0, 19.2, 392.8, 4, 20.8, 392.8},
     ["Upcoming OP"] = {-1,16,50},
 }
  
@@ -174,7 +175,8 @@ local defenders_recoil_patterns = {
 local operator_descriptions = {
     ["Ace"]        = {gun = "AK12",          attachments = "VERT GRIP - 2.5x - FLASHHIDER"},
     ["Amaru"]      = {gun = "G8A1",          attachments = "VERT GRIP - 1x - SUPRESSROR"},
-    ["Ash"]        = {gun = "R4C",           attachments = "VERT GRIP - 1x - SUPRESSOR"},
+    ["Ash"]        = {gun = "R4C",           attachments = "VERT GRIP - 2.5x - SUPRESSOR"}
+    ["Ash 1x"]        = {gun = "R4C",           attachments = "VERT GRIP - 1x - FLASHHIDER"},
     ["Blackbeard"] = {gun = "MK17 CQB",      attachments = "HORZ GRIP - IRONSIGHT (1.0x) - FLASHHIDER"},
     ["Buck"]       = {gun = "C8-SFW",        attachments = "NO GRIP - 2.5x - FLASHHIDER"},
     ["Capitao"]    = {gun = "M249",          attachments = "ANGLED GRIP - 2.5x - FLASHHIDER"},
@@ -244,9 +246,9 @@ local operator_descriptions = {
     ["Fenrir"]     = {gun = "MP7",           attachments = "NO GRIP - 1x - COMPENSATOR"},
 }
  
---------------------------------------------------------------------------------------------------------------
--- IF YOU DONT UNDERSTAND HOW THE AUTO OPERATOR DETECT WORKS THEN CHANGE YOUR OPS MANUALLY AT ''local v1='' --
---------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- SHOULD NOT CHANGE ANYTHING UNDER THIS LINE --
+--------------------------------------------------------------------------------
 local attackers_operators = {
     "Ace", "Amaru", "Ash", "Blackbeard", "Buck", "Capitao", "Dokkaebi", "Finka",
     "Flores", "Zofia", "Fuze", "Glaz", "Gridlock", "Grim", "Hibana", "Iana",
@@ -259,6 +261,7 @@ local defenders_operators = {
     "Mute", "Oryx", "Pulse", "Rook", "Smoke", "Tachanka", "Thorn", "Thunderbird", "Valkyrie",
     "Vigil", "Wamai", "Warden", "Upcoming OP",
 }
+ 
  
  
 local function v0(v4) local v5=v4-(v4%1) ;if ((v4%1)>=0.5) then return v5 + (1 -0) ;else return v5;end end ClearLog();OutputLogMessage("Loading...");local v1=(attackers and "Ace") or "Alibi" ;local v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;asciiArtLines={" ▄████████    ▄████████ ▄██   ▄      ▄███████▄     ███      ▄█   ▄████████ ","███    ███   ███    ███ ███   ██▄   ███    ███ ▀█████████▄ ███  ███    ███ ","███    █▀    ███    ███ ███▄▄▄███   ███    ███    ▀███▀▀██ ███▌ ███    █▀  ","███         ▄███▄▄▄▄██▀ ▀▀▀▀▀▀███   ███    ███     ███   ▀ ███▌ ███        ","███        ▀▀███▀▀▀▀▀   ▄██   ███ ▀█████████▀      ███     ███▌ ███        ","███    █▄  ▀███████████ ███   ███   ███            ███     ███  ███    █▄  ","███    ███   ███    ███ ███   ███   ███            ███     ███  ███    ███ ","████████▀    ███    ███  ▀█████▀   ▄████▀         ▄████▀   █▀   ████████▀  ","             ███    ███                "};local function v3() local v6={};local v7=(attackers and attackers_operators) or defenders_operators ;for v12=1, #v7,4 do local v13=v7[v12] or "" ;local v14=v7[v12 + (2 -1) ] or "" ;local v15=v7[v12 + (3 -1) ] or "" ;local v16=v7[v12 + (4 -1) ] or "" ;local v17=((v1==v13) and ">✅<") or "[❌]" ;local v18=((v1==v14) and ">✅<") or "[❌]" ;local v19=((v1==v15) and ">✅<") or "[❌]" ;local v20=((v1==v16) and ">✅<") or "[❌]" ;v6[ #v6 + (351 -(87 + 263)) ]=string.format("  %s - %-12s   %s - %-12s   %s - %-12s   %s - %-12s",v17,v13,v18,v14,v19,v15,v20,v16);end return v6;end function DisplayMenu() ClearLog();OutputLogMessage("Selected Mode: %s\n",(attackers and "⚔️Attackers⚔️ \n") or "🏰Defenders🏰 \n" );if operator_descriptions[v1] then local v25=0;while true do if ((181 -(67 + 113))==v25) then OutputLogMessage("Attachments: %s\n",operator_descriptions[v1].attachments);break;end if (v25==(0 + 0)) then OutputLogMessage("Operator: %s\n",v1);OutputLogMessage("Gun: %s\n",operator_descriptions[v1].gun);v25=2 -1 ;end end end OutputLogMessage("\n");local v8=v3();local v9=math.max( #v8, #asciiArtLines);for v22=1 + 0 ,v9 do local v23=v8[v22] or "" ;local v24=asciiArtLines[v22] or "" ;OutputLogMessage(string.format("%-80s%s\n",v23,v24));end end function OnEvent(v10,v11) if (v10=="MOUSE_BUTTON_PRESSED") then if ((v11==(11 -8)) and IsModifierPressed("lctrl")) then local v28=(attackers and attackers_operators) or defenders_operators ;local v29=953 -(802 + 150) ;for v31,v32 in ipairs(v28) do if (v32==v1) then v29=v31 + (2 -1) ;if (v29> #v28) then v29=1;end break;end end v1=v28[v29];v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;DisplayMenu();return;end local v26=false;if v26 then OutputLogMessage(string.format("%s \n",v11));end local v27=(attackers and button_map_attackers) or button_map_defenders ;if (mouse=="superlight") then if IsModifierPressed("lctrl") then for v33,v34 in pairs(v27) do if (v11==v34) then local v42=0 -0 ;while true do if (v42==(1 + 0)) then DisplayMenu();return;end if (v42==(997 -(915 + 82))) then v1=v33;v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;v42=2 -1 ;end end end end end elseif (mouse=="g502") then for v35,v36 in pairs(v27) do if (v11==v36) then local v43=0 + 0 ;while true do if (v43==(1 -0)) then DisplayMenu();return;end if (v43==0) then v1=v35;v2=(attackers and attackers_recoil_patterns[v1]) or defenders_recoil_patterns[v1] or {} ;v43=1188 -(1069 + 118) ;end end end end end if ((v11==(2 -1)) and  not IsKeyLockOn(toggleKey)) then if IsMouseButtonPressed(3) then for v37=1 -0 , #v2,3 do local v38=GetRunningTime();local v39=v2[v37];local v40=v0(v2[v37 + 1 + 0 ] * y_recoil_factor );local v41=v2[v37 + (3 -1) ];repeat Sleep(10 + 0 );MoveMouseRelative(v39,v40);until ((GetRunningTime() -v38)>=v41) or  not IsMouseButtonPressed(792 -(368 + 423) ) or  not IsMouseButtonPressed(9 -6 )  if ( not IsMouseButtonPressed(19 -(10 + 8) ) or  not IsMouseButtonPressed(3)) then break;end end end end end end DisplayMenu();
